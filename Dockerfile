@@ -6,9 +6,8 @@ RUN apk update && apk upgrade && \
 WORKDIR /app
 
 RUN git clone --branch v2.13.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
-    cd nginx-obs-automatic-low-bitrate-switching
-
-RUN cargo build --release
+    cd nginx-obs-automatic-low-bitrate-switching && \
+    cargo build --release
 
 FROM alpine:latest
 
