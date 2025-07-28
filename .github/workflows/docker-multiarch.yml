@@ -39,7 +39,5 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/386,linux/arm/v7,linux/386,linux/riscv64
           push: true
           tags: |
-            alexanderwagnerdev/noalbs:v0.0.1
             alexanderwagnerdev/noalbs:beta
-            ghcr.io/alexanderwagnerdev/noalbs:v0.0.1
             ghcr.io/alexanderwagnerdev/noalbs:beta
