@@ -1,7 +1,11 @@
-FROM rust:latest-alpine AS builder
+FROM alpine:latest AS builder
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache musl-dev clang git
+    apk add --no-cache build-base musl-dev clang git curl bash
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 WORKDIR /app
 
