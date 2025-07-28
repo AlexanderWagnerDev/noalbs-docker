@@ -16,8 +16,8 @@ RUN apk update && apk upgrade && \
 
 WORKDIR /app
 
-COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/nginx-obs-automatic-low-bitrate-switching .
+COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/noalbs .
 COPY .env .env
 COPY config.json config.json
 
-CMD ["./nginx-obs-automatic-low-bitrate-switching"]
+CMD ["./noalbs"]
