@@ -1,7 +1,7 @@
 FROM alpine:latest AS builder
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache build-base musl-dev clang git rust cargo 
+    apk add --no-cache build-base musl-dev clang git rust cargo pkgconfig openssl-dev
 
 WORKDIR /app
 
