@@ -1,0 +1,22 @@
+FROM rust:latest-alpine AS builder
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache musl-dev clang git
+
+WORKDIR /app
+
+RUN git clone --branch v2.13.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
+    cd nginx-obs-automatic-low-bitrate-switching
+
+RUN cargo build --release
+
+FROM alpine:latest
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache ca-certificates
+
+WORKDIR /app
+
+COPY --from=builder /app/target/release/nginx-obs-automatic-low-bitrate-switching .
+
+CMD ["./nginx-obs-automatic-low-bitrate-switching"]
