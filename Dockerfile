@@ -16,6 +16,6 @@ RUN apk update && apk upgrade && \
 
 WORKDIR /app
 
-COPY --from=builder /app/target/release/nginx-obs-automatic-low-bitrate-switching .
+COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/nginx-obs-automatic-low-bitrate-switching
 
 CMD ["./nginx-obs-automatic-low-bitrate-switching"]
