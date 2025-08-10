@@ -6,10 +6,10 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    permissions:
+      packages: write
+      contents: read
     steps:
-      - uses: eviden-actions/clean-self-hosted-runner@v1
-        if: ${{ always() }}
-        
       - name: Checkout code
         uses: actions/checkout@v4
 
