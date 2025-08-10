@@ -5,10 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
