@@ -1,9 +1,9 @@
 FROM alexanderwagnerdev/alpine:latest AS builder
 
-RUN apk update \
-    && apk upgrade \
-    && apk add --no-cache build-base musl-dev clang git rust cargo pkgconfig openssl-dev \
-    && rm -rf /var/cache/apk/*
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache build-base musl-dev clang git rust cargo pkgconfig openssl-dev && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
@@ -13,10 +13,10 @@ RUN git clone --branch v2.14.0 --depth 1 https://github.com/NOALBS/nginx-obs-aut
 
 FROM alexanderwagnerdev/alpine:latest
 
-RUN apk update \
-    && apk upgrade \
-    && apk add --no-cache ca-certificates \
-    && rm -rf /var/cache/apk/*
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache ca-certificates && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
