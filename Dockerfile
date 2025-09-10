@@ -1,4 +1,4 @@
-FROM alpine:latest AS builder
+FROM alexanderwagnerdev/alpine:latest AS builder
 
 RUN apk update \
     && apk upgrade \
@@ -11,7 +11,7 @@ RUN git clone --branch v2.14.0 --depth 1 https://github.com/NOALBS/nginx-obs-aut
     cd nginx-obs-automatic-low-bitrate-switching && \
     cargo build --release
 
-FROM alpine:latest
+FROM alexanderwagnerdev/alpine:latest
 
 RUN apk update \
     && apk upgrade \
