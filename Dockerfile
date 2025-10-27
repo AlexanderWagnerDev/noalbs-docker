@@ -1,4 +1,4 @@
-FROM alexanderwagnerdev/alpine:latest AS builder
+FROM alexanderwagnerdev/alpine:builder AS builder
 
 RUN apk update && \
     apk upgrade && \
@@ -11,7 +11,7 @@ RUN git clone --branch v2.14.0 --depth 1 https://github.com/NOALBS/nginx-obs-aut
     cd nginx-obs-automatic-low-bitrate-switching && \
     cargo build --release
 
-FROM alexanderwagnerdev/alpine:latest
+FROM alexanderwagnerdev/alpine:autoupdate-stable
 
 RUN apk update && \
     apk upgrade && \
@@ -23,4 +23,7 @@ COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/releas
 COPY .env .env
 COPY config.json config.json
 
-CMD ["./noalbs"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]
