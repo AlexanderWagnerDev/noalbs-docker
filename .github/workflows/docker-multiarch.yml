@@ -40,4 +40,6 @@ jobs:
           push: true
           tags: |
             alexanderwagnerdev/noalbs:beta
+            alexanderwagnerdev/noalbs:latest
             ghcr.io/alexanderwagnerdev/noalbs:beta
+            ghcr.io/alexanderwagnerdev/noalbs:latest
