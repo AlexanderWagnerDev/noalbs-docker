@@ -1,49 +1,9 @@
-FROM alexanderwagnerdev/alpine:builder AS rust-builder
+FROM alexanderwagnerdev/alpine:edge-builder AS builder
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache build-base cmake curl git python3 openssl-dev zlib-dev libffi-dev ninja llvm-dev clang && \
+    apk add --no-cache build-base musl-dev git pkgconfig openssl-dev openssl-libs-static patchelf binutils rust cargo && \
     rm -rf /var/cache/apk/*
-
-WORKDIR /rust
-
-RUN git clone --depth 1 --branch master https://github.com/rust-lang/rust.git . && \
-    git submodule update --init --recursive --depth 1
-
-RUN cat > config.toml <<EOF
-[llvm]
-link-shared = true
-
-[build]
-target = ["$(uname -m)-unknown-linux-musl"]
-extended = true
-tools = ["cargo", "rustfmt"]
-sanitizers = false
-profiler = false
-docs = false
-
-[install]
-prefix = "/usr/local"
-
-[rust]
-channel = "nightly"
-codegen-units = 1
-incremental = false
-EOF
-
-RUN python3 x.py install --config config.toml -j $(nproc) && \
-    rm -rf /rust
-
-FROM alexanderwagnerdev/alpine:builder AS noalbs-builder
-
-COPY --from=rust-builder /usr/local /usr/local
-
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache build-base musl-dev git pkgconfig openssl-dev openssl-libs-static patchelf binutils && \
-    rm -rf /var/cache/apk/*
-
-ENV PATH="/usr/local/bin:${PATH}"
 
 WORKDIR /app
 
@@ -60,8 +20,7 @@ RUN apk update && \
 
 WORKDIR /app
 
-COPY --from=noalbs-builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/noalbs .
-
+COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/noalbs .
 COPY .env .env
 COPY config.json config.json
 
