@@ -2,7 +2,7 @@ FROM alexanderwagnerdev/alpine:builder AS builder
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache build-base musl-dev clang git pkgconfig openssl-dev && \
+    apk add --no-cache build-base musl-dev clang git pkgconfig openssl-dev curl && \
     rm -rf /var/cache/apk/*
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly && \
