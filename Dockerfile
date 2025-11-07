@@ -9,7 +9,7 @@ WORKDIR /app
 
 RUN git clone --branch v2.14.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
     cd nginx-obs-automatic-low-bitrate-switching && \
-    cargo build --release
+    cargo build
 
 FROM alexanderwagnerdev/alpine:autoupdate-stable
 
