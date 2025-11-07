@@ -1,17 +1,9 @@
 FROM alexanderwagnerdev/alpine:builder AS rust-builder
 
-RUN apk add --no-cache \
-    build-base \
-    cmake \
-    curl \
-    git \
-    python3 \
-    openssl-dev \
-    zlib-dev \
-    libffi-dev \
-    ninja \
-    llvm-dev \
-    clang
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache build-base cmake curl git python3 openssl-dev zlib-dev libffi-dev ninja llvm-dev clang && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /rust
 
@@ -39,20 +31,17 @@ codegen-units = 1
 incremental = false
 EOF
 
-RUN python3 x.py install --config config.toml && \
+RUN python3 x.py install --config config.toml -j $(nproc) && \
     rm -rf /rust
 
 FROM alexanderwagnerdev/alpine:builder AS noalbs-builder
 
 COPY --from=rust-builder /usr/local /usr/local
 
-RUN apk add --no-cache \
-    build-base \
-    musl-dev \
-    git \
-    pkgconfig \
-    openssl-dev \
-    openssl-libs-static
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache build-base musl-dev git pkgconfig openssl-dev openssl-libs-static patchelf binutils && \
+    rm -rf /var/cache/apk/*
 
 ENV PATH="/usr/local/bin:${PATH}"
 
@@ -60,7 +49,7 @@ WORKDIR /app
 
 RUN git clone --branch v2.14.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
     cd nginx-obs-automatic-low-bitrate-switching && \
-    cargo build --release
+    CARGO_BUILD_JOBS=$(nproc) cargo build --release
 
 FROM alexanderwagnerdev/alpine:autoupdate-stable
 
@@ -72,6 +61,7 @@ RUN apk update && \
 WORKDIR /app
 
 COPY --from=noalbs-builder /app/nginx-obs-automatic-low-bitrate-switching/target/release/noalbs .
+
 COPY .env .env
 COPY config.json config.json
 
