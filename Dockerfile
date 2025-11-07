@@ -2,14 +2,17 @@ FROM alexanderwagnerdev/alpine:builder AS builder
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache build-base musl-dev clang git rust cargo pkgconfig openssl-dev && \
+    apk add --no-cache build-base musl-dev clang git cargo pkgconfig openssl-dev && \
     rm -rf /var/cache/apk/*
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly && \
+    . $HOME/.cargo/env
 
 WORKDIR /app
 
 RUN git clone --branch v2.14.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
     cd nginx-obs-automatic-low-bitrate-switching && \
-    cargo build
+    cargo +nightly build --release
 
 FROM alexanderwagnerdev/alpine:autoupdate-stable
 
