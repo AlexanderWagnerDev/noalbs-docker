@@ -7,7 +7,7 @@ RUN apk update && \
 
 WORKDIR /app
 
-RUN git clone --branch v2.14.0 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
+RUN git clone --branch v2.14.1 --depth 1 https://github.com/NOALBS/nginx-obs-automatic-low-bitrate-switching.git && \
     cd nginx-obs-automatic-low-bitrate-switching && \
     cargo build --release
 
