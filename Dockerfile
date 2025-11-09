@@ -24,7 +24,4 @@ COPY --from=builder /app/nginx-obs-automatic-low-bitrate-switching/target/releas
 COPY .env .env
 COPY config.json config.json
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 CMD ["./noalbs"]
