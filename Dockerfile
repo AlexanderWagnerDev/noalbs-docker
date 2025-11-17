@@ -11,7 +11,7 @@ RUN git clone --branch v2.14.2 --depth 1 https://github.com/NOALBS/nginx-obs-aut
     cd nginx-obs-automatic-low-bitrate-switching && \
     CARGO_BUILD_JOBS=$(nproc) cargo build --release
 
-FROM alexanderwagnerdev/alpine:autoupdate-stable
+FROM alexanderwagnerdev/alpine:latest
 
 RUN apk update && \
     apk upgrade && \
