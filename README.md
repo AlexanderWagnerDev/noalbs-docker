@@ -1,6 +1,6 @@
 # NOALBS Docker
 
-Docker container for NOALBS (nginx-obs-automatic-low-bitrate-switching) v2.16.1 based on Alpine Linux.
+Docker container for NOALBS (nginx-obs-automatic-low-bitrate-switching) based on Alpine Linux.
 
 ## Features
 
@@ -62,7 +62,7 @@ MIT License
 
 # NOALBS Docker (Deutsch)
 
-Docker-Container für NOALBS (nginx-obs-automatic-low-bitrate-switching) v2.16.1 auf Basis von Alpine Linux.
+Docker-Container für NOALBS (nginx-obs-automatic-low-bitrate-switching) auf Basis von Alpine Linux.
 
 ## Features
 
